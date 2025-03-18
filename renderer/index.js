@@ -1,27 +1,46 @@
-// renderer/index.js
+import "@fontsource/inter"; // Defaults to weight 400
+import "@fontsource/inter/700.css"; // Specify weight
+
+// DOM Element References (cache these for efficiency)
+const pythonVersionSpan = document.getElementById('python-version');
+const venvNameInput = document.getElementById('venv-name');
+const pythonPathInput = document.getElementById('python-path');
+const createVenvBtn = document.getElementById('create-venv-btn');
+const createVenvMessage = document.getElementById('create-venv-message');
+const venvPathInput = document.getElementById('venv-path');
+const listPackagesBtn = document.getElementById('list-packages-btn');
+const packageList = document.getElementById('package-list');
+
+// Function to set the Python version
 async function setPythonVersion() {
-  const version = await window.electronAPI.getPythonVersion();
-  document.getElementById('python-version').innerText = version;
+    const version = await window.electronAPI.getPythonVersion();
+    pythonVersionSpan.innerText = version;
 }
 
-setPythonVersion();
-
-document.getElementById('create-venv-btn').addEventListener('click', async () => {
-    const venvName = document.getElementById('venv-name').value;
-    const pythonPath = document.getElementById('python-path').value;
+// Function to handle creating a virtual environment
+async function handleCreateVenv() {
+    const venvName = venvNameInput.value;
+    const pythonPath = pythonPathInput.value;
     const result = await window.electronAPI.createVenv(venvName, pythonPath);
-    document.getElementById('create-venv-message').innerText = result.message;
-});
+    createVenvMessage.innerText = result.message;
+}
 
-document.getElementById('list-packages-btn').addEventListener('click', async () => {
-    const venvPath = document.getElementById('venv-path').value;
+// Function to handle listing packages
+async function handleListPackages() {
+    const venvPath = venvPathInput.value;
     const packages = await window.electronAPI.listPackages(venvPath);
-    const packageList = document.getElementById('package-list');
     packageList.innerHTML = ''; // Clear previous list
 
     packages.forEach(pkg => {
-      const listItem = document.createElement('li');
-      listItem.textContent = `${pkg.name} (${pkg.version})`;
-      packageList.appendChild(listItem);
+        const listItem = document.createElement('li');
+        listItem.textContent = `${pkg.name} (${pkg.version})`;
+        packageList.appendChild(listItem);
     });
-});
+}
+
+// Event Listeners
+createVenvBtn.addEventListener('click', handleCreateVenv);
+listPackagesBtn.addEventListener('click', handleListPackages);
+
+// Initial Setup
+setPythonVersion();

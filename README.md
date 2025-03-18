@@ -3,11 +3,12 @@ This is supposed to be the state-of-the-art webUI application for virtual enviro
 Right now, its work in progress
 
 To use it:
-
+```bash
 git clone https://github.com/eatingmangoes/venv.sh
 cd venv.sh
 npm install
 npm start
+```
 
 Contributors:
 

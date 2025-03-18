@@ -1,3 +1,4 @@
+<!-- renderer/index.html -->
 <!DOCTYPE html>
 <html>
   <head>
@@ -8,6 +9,17 @@
   <body>
     <h1>venv.sh</h1>
     <p>Python Version: <span id="python-version">Loading...</span></p>
+
+    <h2>Create Virtual Environment</h2>
+    <input type="text" id="venv-name" placeholder="Virtual Environment Name">
+    <input type="text" id="python-path" placeholder="Path to Python (optional)">
+    <button id="create-venv-btn">Create</button>
+    <p id="create-venv-message"></p>
+
+    <h2>List Packages</h2>
+    <input type="text" id="venv-path" placeholder="Path to Virtual Environment">
+    <button id="list-packages-btn">List Packages</button>
+    <ul id="package-list"></ul>
 
     <script src="./index.js"></script>
   </body>

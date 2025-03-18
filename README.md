@@ -4,4 +4,4 @@ Right now, its work in progress
 
 Contributors:
 
-@Ghajik, @Xantimax, & @TheProv1
+@eatingmangoes, @Xantimax, & @TheProv1

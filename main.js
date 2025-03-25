@@ -34,22 +34,13 @@ app.on('window-all-closed', () => {
   }
 });
 
-const { exec } = require('child_process');
-
+// --- IPC Handling (Example) ---
 ipcMain.handle('get-python-version', async () => {
-  return new Promise((resolve, reject) => {
-    exec('python3 --version', (error, stdout, stderr) => { // Or 'python' if that's your default
-      if (error) {
-        console.error(`exec error: ${error}`);
-        reject(error); // Or handle the error more gracefully
-        return;
-      }
-      // Extract the version string (you might need to adjust the regex)
-      const version = stdout.trim().match(/Python (\d+\.\d+\.\d+)/)[1];
-      resolve(version);
-    });
-  });
+    // Placeholder for getting the Python version.  We'll implement this later.
+    return "3.9.7 (Example)"; // Replace with actual logic
 });
+
+const { exec } = require('child_process');
 
 // --- Example: Create a Virtual Environment ---
 ipcMain.handle('create-venv', async (event, venvName, pythonPath) => {

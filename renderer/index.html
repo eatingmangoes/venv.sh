@@ -1,42 +1,26 @@
+<!-- renderer/index.html -->
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>venv.sh</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="container">
-    <header>
-      <h1>venv.sh</h1>
-      <p>Python Version: <span id="python-version">Loading...</span></p>
-    </header>
+  <head>
+    <meta charset="UTF-8">
+    <title>venv.sh</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>venv.sh</h1>
+    <p>Python Version: <span id="python-version">Loading...</span></p>
 
-    <section class="create-venv">
-      <h2>Create Virtual Environment</h2>
-      <div class="form-group">
-        <label for="venv-name">Environment Name:</label>
-        <input type="text" id="venv-name" placeholder="my-env">
-      </div>
-      <div class="form-group">
-        <label for="python-path">Python Path (Optional):</label>
-        <input type="text" id="python-path" placeholder="/path/to/python3">
-      </div>
-      <button id="create-venv-btn" class="btn">Create</button>
-      <p id="create-venv-message" class="message"></p>
-    </section>
+    <h2>Create Virtual Environment</h2>
+    <input type="text" id="venv-name" placeholder="Virtual Environment Name">
+    <input type="text" id="python-path" placeholder="Path to Python (optional)">
+    <button id="create-venv-btn">Create</button>
+    <p id="create-venv-message"></p>
 
-    <section class="list-packages">
-      <h2>List Packages</h2>
-      <div class="form-group">
-        <label for="venv-path">Environment Path:</label>
-        <input type="text" id="venv-path" placeholder="/path/to/my-env">
-      </div>
-      <button id="list-packages-btn" class="btn">List Packages</button>
-      <ul id="package-list" class="package-list"></ul>
-    </section>
-  </div>
+    <h2>List Packages</h2>
+    <input type="text" id="venv-path" placeholder="Path to Virtual Environment">
+    <button id="list-packages-btn">List Packages</button>
+    <ul id="package-list"></ul>
 
-  <script src="./index.js"></script>
-</body>
+    <script src="./index.js"></script>
+  </body>
 </html>

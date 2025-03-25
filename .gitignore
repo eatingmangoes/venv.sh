@@ -2,7 +2,7 @@
 node_modules/
 test/
 a/
-
+b/
 # Build artifacts (adjust these paths as needed)
 dist/
 build/

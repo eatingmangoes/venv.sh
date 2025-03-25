@@ -63,6 +63,7 @@ ipcMain.handle('create-venv', async (event, venvName, pythonPath) => {
 ipcMain.handle('list-packages', async (event, venvPath) => {
   return new Promise((resolve, reject) => {
     // Construct the path to the pip executable within the venv
+    
     const pipPath = path.join(venvPath, 'bin', 'pip'); // For Unix-like systems
     // const pipPath = path.join(venvPath, 'Scripts', 'pip.exe'); // For Windows
 

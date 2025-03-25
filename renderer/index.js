@@ -1,4 +1,8 @@
 // renderer/index.js
+const CREATE_VENV_BUTTON = document.getElementById('create-venv-btn')
+const DEFAULT_PYTHON_PATH = "PATH"
+const DEFAULT_VENV_NAME = "venv"
+
 async function setPythonVersion() {
     const version = await window.electronAPI.getPythonVersion();
     document.getElementById('python-version').innerText = version;
@@ -6,11 +10,13 @@ async function setPythonVersion() {
   
   setPythonVersion();
   
-  document.getElementById('create-venv-btn').addEventListener('click', async () => {
-      const venvName = document.getElementById('venv-name').value;
-      const pythonPath = document.getElementById('python-path').value;
-      const result = await window.electronAPI.createVenv(venvName, pythonPath);
-      document.getElementById('create-venv-message').innerText = result.message;
+  CREATE_VENV_BUTTON.addEventListener('click', async () => {
+        CREATE_VENV_BUTTON.innerText = "Creating..."
+        const venvName = document.getElementById('venv-name').value || DEFAULT_VENV_NAME ;
+        const pythonPath = document.getElementById('python-path').value || DEFAULT_PYTHON_PATH;
+        const result = await window.electronAPI.createVenv(venvName, pythonPath);
+        if (result) CREATE_VENV_BUTTON.innerText = "Create"
+        document.getElementById('create-venv-message').innerText = result.message;
   });
   
   document.getElementById('list-packages-btn').addEventListener('click', async () => {

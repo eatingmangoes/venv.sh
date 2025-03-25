@@ -1,3 +1,4 @@
+// main.js
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 
@@ -81,6 +82,27 @@ ipcMain.handle('list-packages', async (event, venvPath) => {
       } catch (parseError) {
         reject(parseError);
       }
+    });
+  });
+});
+
+// --- Install a package in a venv ---
+ipcMain.handle('install-package', async (event, venvPath, packageName) => {
+  return new Promise((resolve, reject) => {
+    const pipPath = path.join(venvPath, 'bin', 'pip'); // For Unix-like systems
+    // const pipPath = path.join(venvPath, 'Scripts', 'pip.exe'); // For Windows
+
+    const command = `${pipPath} install ${packageName}`;
+
+    exec(command, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`exec error: ${error}`);
+        // Include stderr for more detailed error messages
+        reject({ error, stderr }); 
+        return;
+      }
+      // stdout usually contains installation progress/success messages
+      resolve({ success: true, message: `Package "${packageName}" installed successfully.\n${stdout}` });
     });
   });
 });

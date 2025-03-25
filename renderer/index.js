@@ -31,3 +31,10 @@ async function setPythonVersion() {
         packageList.appendChild(listItem);
       });
   });
+
+  document.getElementById('install-package-btn').addEventListener('click', async () => {
+    const venvPath = document.getElementById('install-venv-path').value;
+    const packageName = document.getElementById('package-name').value;
+    const result = await window.electronAPI.installPackage(venvPath, packageName);
+    document.getElementById('install-package-message').innerText = result.message;
+  });

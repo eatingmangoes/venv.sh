@@ -1,4 +1,4 @@
-<!-- renderer/index.html -->
+// renderer/index.html
 <!DOCTYPE html>
 <html>
   <head>
@@ -20,6 +20,12 @@
     <input type="text" id="venv-path" placeholder="Path to Virtual Environment">
     <button id="list-packages-btn">List Packages</button>
     <ul id="package-list"></ul>
+
+    <h2>Install Package</h2>
+    <input type="text" id="install-venv-path" placeholder="Path to Virtual Environment">
+    <input type="text" id="package-name" placeholder="Package Name">
+    <button id="install-package-btn">Install Package</button>
+    <p id="install-package-message"></p>
 
     <script src="./index.js"></script>
   </body>

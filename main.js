@@ -91,7 +91,6 @@ ipcMain.handle('install-package', async (event, venvPath, packageName) => {
   return new Promise((resolve, reject) => {
     const pipPath = path.join(venvPath, 'bin', 'pip'); // For Unix-like systems
     // const pipPath = path.join(venvPath, 'Scripts', 'pip.exe'); // For Windows
-
     const command = `${pipPath} install ${packageName}`;
 
     exec(command, (error, stdout, stderr) => {

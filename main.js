@@ -1,5 +1,5 @@
-// main.js
 const { app, BrowserWindow, ipcMain } = require('electron');
+const { exec } = require('child_process'); // Declared once
 const path = require('path');
 
 function createWindow() {
@@ -35,15 +35,20 @@ app.on('window-all-closed', () => {
   }
 });
 
-// --- IPC Handling (Example) ---
+// --- Get Python version ---
 ipcMain.handle('get-python-version', async () => {
-    // Placeholder for getting the Python version.  We'll implement this later.
-    return "3.9.7 (Example)"; // Replace with actual logic
+    return new Promise((resolve, reject) => {
+        exec('python --version', (error, stdout, stderr) => {
+            if (error) {
+                reject(`Error fetching Python version: ${error.message}`);
+                return;
+            }
+            resolve(stdout.trim() || stderr.trim()); // Some versions print to stderr
+        });
+    });
 });
 
-const { exec } = require('child_process');
-
-// --- Example: Create a Virtual Environment ---
+// --- Create a Virtual Environment ---
 ipcMain.handle('create-venv', async (event, venvName, pythonPath) => {
     return new Promise((resolve, reject) => {
         const command = pythonPath ? 
@@ -60,11 +65,9 @@ ipcMain.handle('create-venv', async (event, venvName, pythonPath) => {
     });
 });
 
-// --- Example: List installed packages in a venv ---
+// --- List installed packages in a venv ---
 ipcMain.handle('list-packages', async (event, venvPath) => {
   return new Promise((resolve, reject) => {
-    // Construct the path to the pip executable within the venv
-    // const pipPath = path.join(venvPath, 'bin', 'pip'); // For Unix-like systems
     const pipPath = path.join(venvPath, 'Scripts', 'pip.exe'); // For Windows
 
     const command = `${pipPath} list --format=json`;
@@ -88,19 +91,16 @@ ipcMain.handle('list-packages', async (event, venvPath) => {
 // --- Install a package in a venv ---
 ipcMain.handle('install-package', async (event, venvPath, packageName) => {
   return new Promise((resolve, reject) => {
-    const pipPath = path.join(venvPath, 'Scripts', 'python.exe'); // For Unix-like systems
-    // const pipPath = path.join(venvPath, 'Scripts', 'pip.exe'); // For Windows
+    const pipPath = path.join(venvPath, 'Scripts', 'python.exe'); // For Windows
 
     const command = `${pipPath} -m pip install ${packageName}`;
 
     exec(command, (error, stdout, stderr) => {
       if (error) {
         console.error(`exec error: ${error}`);
-        // Include stderr for more detailed error messages
         reject({ error, stderr }); 
         return;
       }
-      // stdout usually contains installation progress/success messages
       resolve({ success: true, message: `Package "${packageName}" installed successfully.\n${stdout}` });
     });
   });

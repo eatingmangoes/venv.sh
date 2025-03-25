@@ -2,6 +2,7 @@
 const CREATE_VENV_BUTTON = document.getElementById('create-venv-btn')
 const DEFAULT_PYTHON_PATH = "PATH"
 const DEFAULT_VENV_NAME = "venv"
+const CONSOLE = document.getElementById("console")
 
 async function setPythonVersion() {
     const version = await window.electronAPI.getPythonVersion();
@@ -36,5 +37,5 @@ async function setPythonVersion() {
     const venvPath = document.getElementById('install-venv-path').value;
     const packageName = document.getElementById('package-name').value;
     const result = await window.electronAPI.installPackage(venvPath, packageName);
-    document.getElementById('install-package-message').innerText = result.message;
+    CONSOLE.innerText = result.message;
   });
